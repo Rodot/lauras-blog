@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+/* THEME */
+
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  /* white text on brand cyan */
+  --color-primary: #00c1de;
+  --color-primary-content: #ffffff;
+  /* white text on brand navy */
+  --color-neutral: #002856;
+  --color-neutral-content: #ffffff;
+  /* brand slate */
+  --color-base-content: var(--color-neutral);
+  --color-base-100: "white";
+  --color-base-200: color-mix(in srgb, var(--color-neutral) 3%, transparent);
+  --color-base-300: color-mix(in srgb, var(--color-neutral) 6%, transparent);
+  /* colors from AvatarColors */
+  --color-info: #53a8cc;
+  --color-info-content: #ffffff;
+  --color-error: #da627d;
+  --color-error-content: #ffffff;
+  --color-success: #70c1b3;
+  --color-success-content: #ffffff;
+  --color-warning: #ffe066;
+  --color-warning-content: #000000;
+}
