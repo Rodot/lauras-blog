@@ -1,0 +1,42 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/Navbar.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+
+  return allPosts
+    .filter((post) => !post.data.draft)
+    .map((post) => {
+      const [lang, ...slugParts] = post.id.split("/");
+      const slug = slugParts.join("/").replace(/\.md$/, "");
+
+      return {
+        params: { lang, slug },
+        props: { post, lang },
+      };
+    });
+}
+
+const { post, lang } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} lang={lang}>
+  <Navbar lang={lang} />
+  <article class="prose prose-sm max-w-none bg-base-100 rounded-lg p-8">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold mb-2">{post.data.title}</h1>
+      {
+        post.data.description && (
+          <p class="text-lg opacity-70 mb-2">{post.data.description}</p>
+        )
+      }
+      <div class="text-sm opacity-50">
+        {post.data.date.toLocaleDateString(lang)}
+      </div>
+    </header>
+    <Content />
+  </article>
+</Layout>

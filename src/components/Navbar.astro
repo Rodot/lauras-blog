@@ -1,0 +1,43 @@
+---
+import {
+  getTranslation,
+  languageMetadata,
+  languages,
+} from "@/i18n/translations";
+
+interface Props {
+  lang: string;
+  currentPath?: string;
+}
+
+const { lang, currentPath = "/" } = Astro.props;
+const t = getTranslation(lang);
+const currentLangMeta = languageMetadata[lang as keyof typeof languageMetadata];
+---
+
+<nav class="flex justify-between items-center mb-4">
+  <a href={`/${lang}/`} class="text-xl font-bold hover:opacity-70">
+    {t.home}
+  </a>
+  <div class="dropdown dropdown-end">
+    <label tabindex="0" class="btn btn-sm btn-ghost">
+      {currentLangMeta.name}
+    </label>
+    <ul
+      tabindex="0"
+      class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+    >
+      {
+        languages.map((langCode) => {
+          const metadata =
+            languageMetadata[langCode as keyof typeof languageMetadata];
+          return (
+            <li>
+              <a href={metadata.url}>{metadata.name}</a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</nav>

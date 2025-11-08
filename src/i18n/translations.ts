@@ -1,12 +1,9 @@
 export const translations = {
   "en-us": {
-    home: "Dessintey Documentation",
+    home: "Laura's Blog",
   },
   "fr-fr": {
-    home: "Documentation Dessintey",
-  },
-  "es-es": {
-    home: "Documentación Dessintey",
+    home: "Le blog de Laura",
   },
 } as const;
 
@@ -21,15 +18,10 @@ export const languageMetadata = {
     name: "Français",
     url: "/fr-fr/",
   },
-  "es-es": {
-    code: "es-es",
-    name: "Español",
-    url: "/es-es/",
-  },
 } as const;
 
 // Explicit array of supported language codes
-export const languages = ["en-us", "fr-fr", "es-es"];
+export const languages = ["en-us", "fr-fr"];
 
 // Default language
 export const defaultLanguage = "en-us" as const;

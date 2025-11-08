@@ -1,0 +1,58 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/Navbar.astro";
+import { languages, getTranslation } from "@/i18n/translations";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+
+  return languages.map((lang) => {
+    const posts = allPosts
+      .filter((post) => post.id.startsWith(`${lang}/`))
+      .filter((post) => !post.data.draft)
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+    return {
+      params: { lang },
+      props: { posts, lang },
+    };
+  });
+}
+
+const { posts, lang } = Astro.props;
+const t = getTranslation(lang);
+---
+
+<Layout title={t.home} lang={lang}>
+  <Navbar lang={lang} />
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-4">
+      {
+        posts.map((post) => {
+          const slug = post.id
+            .split("/")
+            .slice(1)
+            .join("/")
+            .replace(/\.md$/, "");
+          return (
+            <a
+              href={`/${lang}/${slug}`}
+              class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow"
+            >
+              <div class="card-body">
+                <h3 class="card-title">{post.data.title}</h3>
+                {post.data.description && (
+                  <p class="text-sm opacity-70">{post.data.description}</p>
+                )}
+                <div class="text-xs opacity-50">
+                  {post.data.date.toLocaleDateString(lang)}
+                </div>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </div>
+</Layout>

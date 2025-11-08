@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { languageMetadata } from "@/i18n/translations";
+---
+
+<Layout title="Laura's Blog">
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-row gap-2">
+      {
+        Object.values(languageMetadata).map((lang) => (
+          <a href={lang.url} class="btn">
+            {lang.name}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

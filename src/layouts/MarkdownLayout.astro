@@ -1,9 +1,13 @@
 ---
 import Layout from "./Layout.astro";
+import Navbar from "@/components/Navbar.astro";
+
 const { frontmatter } = Astro.props;
+const lang = frontmatter.lang || "en-us";
 ---
 
-<Layout title={frontmatter.title}>
+<Layout title={frontmatter.title} lang={lang}>
+  <Navbar lang={lang} />
   <article class="prose prose-sm max-w-none bg-base-100 rounded-lg p-8">
     <slot />
   </article>
